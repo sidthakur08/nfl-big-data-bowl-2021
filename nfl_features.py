@@ -120,13 +120,13 @@ animate_play
 
 Input:
     playId --> integer indicating play for which you need the animation
-    home_coord --> 
-    away_coord -->
-    football_coord -->
-    plays -->
+    home_coord --> coordinates of home team players for a frame
+    away_coord --> coordinates of away team players for a frame
+    football_coord --> coordinates of football team players for a frame
+    plays --> plays dataframe for the match to get the play description
 
 Return:
-    animation_gif -->
+    saves the animated gif to the animation folder
 '''
 
 def animate_play(playId,home_coord,away_coord,football_coord,plays):
@@ -148,4 +148,9 @@ def animate_play(playId,home_coord,away_coord,football_coord,plays):
     anim_ax.set_title(plays[plays['playId']==playId].iloc[0]['playDescription'])
     animation_gif = animation.FuncAnimation(anim_fig,animate,frames=home_coord.index,interval=85)
 
-    return animation_gif
+    animation_gif.save(f"animate_play/play_{plays['gameid'].iloc[0]}_{plays['playId'].iloc[0]}.mp4",writer='ffmpeg')
+
+
+
+
+
