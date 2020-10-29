@@ -8,72 +8,126 @@ get_playId
 
 Input: 
     plays --> dataframe consisting of all the plays
-    gameId --> game id of a specific game
+    gameId (int) --> game id of a specific game
 Return:
     returns an array of all the play ids in that game
 
 '''
+
 def get_playId(plays,gameId):
-    return plays[plays['gameId']==gameId]['playId'].values
+    try:
+        return plays[plays['gameId']==gameId]['playId'].values
+    except Exception as e:
+        print(e)
 
 '''
 get_plays
 
 Input: 
     plays --> dataframe consisting of all the plays
-    gameId --> game id of a specific game
+    gameId (int)--> game id of a specific game
 Return:
     returns a dataframe consisting of all the information
     about the plays in that game
 
 '''
+
 def get_plays(plays,gameId):
-    return plays[plays['gameId']==gameId]
+    try:
+        return plays[plays['gameId']==gameId]
+    except Exception as e:
+        print(e)
 
 '''
 get_track_game
 
 Input: 
     track --> dataframe consisting of all the tracking data/ can use the weeks too
-    gameId --> game id of a specific game
+    gameId (int)--> game id of a specific game
 Return:
     returns a dataframe consisting of all the tracking data collected in that game
 
 '''
+
 def get_track_game(track,gameId):
-    return track[track['gameId']==gameId]
+    try:
+        return track[track['gameId']==gameId]
+    except Exception as e:
+        print(e)
 
 '''
 get_track_play
 
 Input: 
     track --> dataframe consisting of all the tracking data/ can use the weeks too
-    playId --> play id of the specific play
+    playId (int)--> play id of the specific play
 Return:
     returns a dataframe of the tracking data collected from the play
 
 '''
 def get_track_play(track,playId):
-    return track[track['playId']==playId]
+    try:
+        return track[track['playId']==playId]
+    except Exception as e:
+        print(e)
+
+'''
+get_track_team
+
+Input:
+    track --> dataframe consisting of tracking data
+    team --> home/away/football being the three choices
+
+Return:
+    returns dataframe with tracking data of home & away players and football
+'''
+
+def get_track_team(track,team):
+    try:
+        return track[track['team']==team]
+    except Exception as e:
+        print(e)
 
 '''
 get_coord
 
 Input:
-    track --> dataframe consisting of all the tracking data/ can use the weeks too
-    playId --> play id of the specific play
+    track --> dataframe consisting of tracking data for the home, away and football objects
+
 Return:
-    returns a dataframe of the tracking data collected from the play
+    c_x --> list of x coordinates
+    c_y --> list of y coordinates
+    
+    returns list of coordinates for the home, away and football
+    (to get coordinates for the animation)
+'''
+
+def get_coord(track):
+    try:
+        c_x = {}
+        c_y = {}
+        for f in set(track['frameId']):
+            c_x[f] = [x for x,x_f in zip(track['x'],track['frameId']) if x_f==f]
+            c_x[f] = [y for y,y_f in zip(track['y'],track['frameId']) if y_f==f]
+
+        return c_x,c_y
+    except Exception as e:
+        print(e)
+
 
 '''
-def get_coord(track):
-    c_x = {}
-    c_y = {}
-    for f in set(track['frameId']):
-        c_x[f] = [x for x,x_f in zip(track['x'],track['frameId']) if x_f==f]
-        c_x[f] = [y for y,y_f in zip(track['y'],track['frameId']) if y_f==f]
+animate_play
 
-    return c_x,c_y
+Input:
+    playId --> integer indicating play for which you need the animation
+    home_coord --> 
+    away_coord -->
+    football_coord -->
+    plays -->
+
+Return:
+    animation_gif -->
+'''
 
 def animate_play(playId,home_coord,away_coord,football_coord,plays):
     anim_fig,anim_ax = plt.subplots(figsize=(15,10))
