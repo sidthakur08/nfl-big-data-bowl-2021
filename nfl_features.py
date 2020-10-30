@@ -108,7 +108,7 @@ def get_coord(track):
         c_y = {}
         for f in set(track['frameId']):
             c_x[f] = [x for x,x_f in zip(track['x'],track['frameId']) if x_f==f]
-            c_x[f] = [y for y,y_f in zip(track['y'],track['frameId']) if y_f==f]
+            c_y[f] = [y for y,y_f in zip(track['y'],track['frameId']) if y_f==f]
 
         return c_x,c_y
     except Exception as e:
@@ -132,11 +132,11 @@ Return:
 def animate_play(playId,home_coord,away_coord,football_coord,plays):
     anim_fig,anim_ax = plt.subplots(figsize=(15,10))
     img = plt.imread('football_field_grayscale.png')
-    anim_ax.imshow(img,extent=[0,120,0,53,34])
+    anim_ax.imshow(img,extent=[0,120,0,53.34])
 
-    h, = anim_ax.plot(home_coord.iloc[0]['h_x'],home_coord[0]['h_y'],'ro')
-    a, = anim_ax.plot(away_coord.iloc[0]['h_x'],away_coord[0]['h_y'],'ro')
-    f, = anim_ax.plot(football_coord.iloc[0]['h_x'],football_coord[0]['h_y'],'ro')
+    h, = anim_ax.plot(home_coord.iloc[0]['h_x'],home_coord.iloc[0]['h_y'],'ro')
+    a, = anim_ax.plot(away_coord.iloc[0]['h_x'],away_coord.iloc[0]['h_y'],'bo')
+    f, = anim_ax.plot(football_coord.iloc[0]['h_x'],football_coord.iloc[0]['h_y'],'ro')
 
     def animate(i):
         h.set_data(home_coord.iloc[i]['h_x'],home_coord.iloc[i]['h_y'])
@@ -146,6 +146,7 @@ def animate_play(playId,home_coord,away_coord,football_coord,plays):
         return h,a,f,
 
     anim_ax.set_title(plays[plays['playId']==playId].iloc[0]['playDescription'])
-    animation_gif = animation.FuncAnimation(anim_fig,animate,frames=home_coord.index,interval=85)
+    animation_gif = animation.FuncAnimation(anim_fig,animate,frames=range(1,len(home_coord.index)),interval=85)
+    plt.close()
 
-    animation_gif.save(f"animate_play/play_{plays['gameid'].iloc[0]}_{plays['playId'].iloc[0]}.mp4",writer='ffmpeg')
+    return animation_gif
