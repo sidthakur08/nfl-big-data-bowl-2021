@@ -149,8 +149,3 @@ def animate_play(playId,home_coord,away_coord,football_coord,plays):
     animation_gif = animation.FuncAnimation(anim_fig,animate,frames=home_coord.index,interval=85)
 
     animation_gif.save(f"animate_play/play_{plays['gameid'].iloc[0]}_{plays['playId'].iloc[0]}.mp4",writer='ffmpeg')
-
-
-
-
-
