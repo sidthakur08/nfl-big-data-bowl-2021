@@ -136,7 +136,7 @@ def animate_play(playId,home_coord,away_coord,football_coord,plays):
 
     h, = anim_ax.plot(home_coord.iloc[0]['h_x'],home_coord.iloc[0]['h_y'],'ro')
     a, = anim_ax.plot(away_coord.iloc[0]['h_x'],away_coord.iloc[0]['h_y'],'bo')
-    f, = anim_ax.plot(football_coord.iloc[0]['h_x'],football_coord.iloc[0]['h_y'],'ro')
+    f, = anim_ax.plot(football_coord.iloc[0]['h_x'],football_coord.iloc[0]['h_y'],'yo')
 
     def animate(i):
         h.set_data(home_coord.iloc[i]['h_x'],home_coord.iloc[i]['h_y'])
